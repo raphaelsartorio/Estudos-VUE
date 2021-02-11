@@ -1,17 +1,31 @@
 <template>
     <div id="app">
-        <h1>TESTE</h1>
-        <HelloWorld/>
+        <input type="text" v-model="clienteRaphael.nome">
+        <Cliente :cliente="clienteRaphael" />
+        <Cliente :cliente="clienteRaphael" />
+        <Cliente :cliente="clienteRaphael" />
     </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Cliente from './components/Cliente'
+// import Produto from './components/Produto'
 
 export default {
     name : 'App',
+    data(){
+        return{
+            nomeDoRaphael: "Raphael Sartorio",
+            clienteRaphael: {
+                nome: "Raphael Sartorio",
+                email: "raphaelsartorio9@gmail.com",
+                idade: 22,
+            }
+        }
+    },
     components: {
-        HelloWorld
+        Cliente,
+        // Produto
     }
 }
 </script>
