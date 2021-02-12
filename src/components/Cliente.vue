@@ -1,9 +1,12 @@
 <template>
-  <div id="cliente">
+  <div :class="{'cliente' : !isPremium, 'cliente-premium': isPremium}">
     <h4>Nome: {{ cliente.nome }}</h4>
     <hr>
-    <p>Email: {{ cliente.email }}</p>
-    <p>Idade: {{ cliente.idade }}</p>
+    <p>Email: {{ cliente.email | processarEmail }}</p>
+    <p v-if="showIdade">Idade: {{ cliente.idade }}</p>
+    <p v-else>O usuário escondeu a idade!</p>
+    <button @click="mudarCor($event)">Mudar cor!</button>
+    <button @click="emitirEventoDelete">Deletar</button>
   </div>
 </template>
 
@@ -11,24 +14,45 @@
 export default {
   data(){
     return {
-        numero: "4499999999",
-        descricao: "ISSO É UMA DESCRIÇÃO"
+      isPremium: false
     }
   },
   props: {
-    nome: String,
-    email: String,
-    idade: Number,
     cliente: Object,
+    showIdade: Boolean
+  },
+  methods: {
+    mudarCor: function($event){
+      console.log($event);
+      this.isPremium = !this.isPremium;
+    },
+    emitirEventoDelete: function(){
+      this.$emit("deletando", {idDoCliente: this.cliente.id, curso: "formação node.js", emPromocao: true, component: this});
+    },
+  },
+  filters:{
+    processarEmail: function(value) {
+      return value.toUpperCase();
+    }
   }
 }
 </script>
 
 <style scoped>
-  #cliente {
+  .cliente {
     background-color: #ECE5E3 ;
     max-width: 600px;
-    height: 135px;
+    height: 160px;
+    padding: 1%;
+    text-align: center;
+    margin-top: 2%;
+  }
+
+  .cliente-premium{
+    background-color: black ;
+    color: blanchedalmond;
+    max-width: 600px;
+    height: 160px;
     padding: 1%;
     text-align: center;
     margin-top: 2%;
